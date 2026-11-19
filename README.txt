@@ -41,8 +41,8 @@ HOW TO PLAY ON IPHONE
 3. Use the on-screen buttons. Hold LEFT/RIGHT while pressing JUMP or BEAM.
 4. To install it like an app: Safari Share > Add to Home Screen.
 5. After the first successful load, the service worker caches the game files;
-   subsequent loads may work offline. Checkpoint progress is saved locally in
-   this browser profile when you activate a save station; it does not sync.
+   subsequent loads may work offline. Progress itself is session-only and is
+   not saved between browser sessions in this prototype.
 
 CONTROLS
 --------
@@ -92,26 +92,3 @@ Milestone 1.8 presentation update:
 - Animated player run/airborne/morph poses and suit glow
 - Subtle enemy idle motion and room-entry pulse
 - Updated WebAssembly renderer bridge; service worker cache v5
-
-
-MILESTONE 1.9 PRESENTATION UPDATE
----------------------------------
-This build adds articulated, state-driven player poses (run, jump/fall, aim,
-and Morph Ball), distinct animated silhouettes for all five ordinary enemy
-types, and short-lived visual effects for shots, enemy defeats, boss hits, and
-player damage. Impact feedback includes restrained screen shake. These effects
-are renderer-only and do not change combat timing, collision, or physics.
-The service-worker cache is versioned v6.
-
-Milestone 2.0 environmental feedback: surface-specific beam/missile impact sparks, bomb detonation flash/debris/shock ring, rubble fragments for removed bomb blocks, animated energy-door cores, and v7 offline cache. Desktop and mobile renderers are identical.
-
-MILESTONE 2.1 AUTHORED SPRITES AND ROOM ATMOSPHERE
--------------------------------------------------
-The player and five ordinary enemy types now use a shared authored pixel-art
-atlas. Player frames respond to idle/run/jump/fall/Morph Ball state; enemies
-have two-frame animation cycles. Sinkhole Shaft has dusty light shafts,
-Cracked Reservoir has moving water caustics and bubbles, and The Nest has
-organic veins and drifting spores. These are cosmetic only and do not alter
-gameplay or collision. The atlas is included at assets/actor_atlas.png and is
-precached by service-worker cache v8. Browser checkpoint saves continue to
-use localStorage on this browser/device.
