@@ -1,0 +1,12 @@
+{
+  "name": "ECHOES OF THE DEEP — Crash Basin",
+  "short_name": "ECHOES",
+  "description": "Mobile-friendly Crash Basin gameplay prototype for ECHOES OF THE DEEP.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#09121b",
+  "theme_color": "#09121b",
+  "orientation": "any",
+  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
