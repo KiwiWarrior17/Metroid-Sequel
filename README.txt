@@ -65,3 +65,10 @@ not allow a local ZIP/file:// page to fetch and run its WebAssembly file.
 
 This is the browser prototype, not an SNES ROM. It remains a blockout build;
 visuals, content, and persistence are still under development.
+
+MILESTONE 1.5 UPDATE
+--------------------
+This build includes the updated Crash Basin gameplay core. The map terminal in
+Basalt Crossing has been moved onto the reachable upper basalt shelf. The
+service-worker cache is versioned v2 so an already-installed mobile site will
+fetch the updated game files on its next visit. Progress remains session-only.

@@ -1,4 +1,4 @@
-const CACHE = 'eod-crash-basin-mobile-v1';
+const CACHE = 'eod-crash-basin-mobile-v2';
 const ASSETS = ['./', './index.html', './game.js', './eod.wasm', './manifest.webmanifest', './icon.svg'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)));
