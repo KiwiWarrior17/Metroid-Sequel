@@ -72,3 +72,23 @@ This build includes the updated Crash Basin gameplay core. The map terminal in
 Basalt Crossing has been moved onto the reachable upper basalt shelf. The
 service-worker cache is versioned v2 so an already-installed mobile site will
 fetch the updated game files on its next visit. Progress remains session-only.
+
+BOSS ROOM UNLOAD FIX
+--------------------
+The Burrower is only drawn while the player is in room 01-09 The Nest.
+Leaving the arena or respawning at a checkpoint hides the boss and clears its
+active projectiles. Its unfinished fight state is retained and resumes if the
+player returns; a defeated Burrower remains permanently defeated. The service
+worker cache version was incremented so this update replaces the prior build.
+
+
+Browser save persistence (Milestone 1.7): activating a checkpoint writes the paired C save records to this browser device using localStorage. Reloading the app restores the last activated checkpoint, energy snapshot, equipment, explored rooms, collected pickups, and destroyed Bomb blocks. Saves do not sync between browsers/devices. Clearing site data removes the local save.
+
+Implementation note: the browser frontend uses the same paired C save format as the native tests. Checkpoint activation triggers the C save commit; the WebAssembly save buffer is persisted in localStorage and loaded on startup. The save contains a CRC/sequence/commit-validated player record and room-state record. If browser storage is unavailable, gameplay continues but saving is unavailable.
+
+Milestone 1.8 presentation update:
+- Eased camera follow with room-transition snap
+- Layered cavern parallax and drifting bioluminescent motes
+- Animated player run/airborne/morph poses and suit glow
+- Subtle enemy idle motion and room-entry pulse
+- Updated WebAssembly renderer bridge; service worker cache v5
