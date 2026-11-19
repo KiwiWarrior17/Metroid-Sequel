@@ -92,3 +92,13 @@ Milestone 1.8 presentation update:
 - Animated player run/airborne/morph poses and suit glow
 - Subtle enemy idle motion and room-entry pulse
 - Updated WebAssembly renderer bridge; service worker cache v5
+
+
+MILESTONE 1.9 PRESENTATION UPDATE
+---------------------------------
+This build adds articulated, state-driven player poses (run, jump/fall, aim,
+and Morph Ball), distinct animated silhouettes for all five ordinary enemy
+types, and short-lived visual effects for shots, enemy defeats, boss hits, and
+player damage. Impact feedback includes restrained screen shake. These effects
+are renderer-only and do not change combat timing, collision, or physics.
+The service-worker cache is versioned v6.
