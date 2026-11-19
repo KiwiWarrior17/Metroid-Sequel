@@ -7,8 +7,8 @@ const names=['THE WRECK','BROKEN PASSAGE','SINKHOLE SHAFT','BASALT CROSSING','SU
 const keys=new Map([['ArrowLeft',1],['KeyA',1],['ArrowRight',2],['KeyD',2],['ArrowUp',4],['KeyW',4],['ArrowDown',8],['KeyS',8],['Space',16],['KeyJ',32],['KeyK',64],['KeyX',128],['KeyC',256]]);
 let held=0,wasd=0,paused=false,mapOpen=false,last=0,acc=0,wasm=null,roomId=0,stars=[],cameraX=0,visualTime=0,roomFlash=0,previousRoom=0;
 let particles=[],shockRings=[],previousProjectiles=[],previousBombs=[],previousTiles=new Uint8Array(32*14),visualPrev={room:0,enemyCount:0,bossHp:0,energy:99,projectiles:0},shake=0,shakeX=0,shakeY=0,fxSeed=17;
-let actorAtlas=null,actorAtlasReady=false;
-if(typeof Image!=='undefined'){actorAtlas=new Image();actorAtlas.onload=()=>{actorAtlasReady=true};actorAtlas.src='assets/actor_atlas.png'}
+let actorAtlas=null,actorAtlasReady=false,bossAtlas=null,bossAtlasReady=false;
+if(typeof Image!=='undefined'){actorAtlas=new Image();actorAtlas.onload=()=>{actorAtlasReady=true};actorAtlas.src='assets/actor_atlas.png';bossAtlas=new Image();bossAtlas.onload=()=>{bossAtlasReady=true};bossAtlas.src='assets/burrower_atlas.png'}
 for(let i=0;i<75;i++)stars.push({x:(i*71+13)%512,y:(i*37+11)%180,a:.12+(i%5)*.07});
 const call=(n,...a)=>wasm.exports[n](...a),txt=p=>{let m=new Uint8Array(wasm.exports.memory.buffer),s='';for(;m[p];p++)s+=String.fromCharCode(m[p]);return s};
 function toggleMap(){if(mapOpen){mapOpen=false;overlay.classList.remove('show')}else if(call('eod_map_unlocked')){mapOpen=true;paused=false;overlay.classList.remove('show')}else{overlayTitle.textContent='MAP DATA UNAVAILABLE';overlayCopy.textContent='Find the survey terminal in Basalt Crossing.';overlay.classList.add('show');paused=true}}
@@ -60,7 +60,7 @@ function updateVisualEvents(id,pX,pY){
  visualPrev={room:id,enemyCount:ec,bossHp:bh,energy,projectiles:pc};
 }
 function drawEnemySprite(x,y,t,frame){
- if(actorAtlasReady&&t>=0&&t<5){const f=Math.floor(visualTime*5+frame)%2;ctx.drawImage(actorAtlas,f*24,(t+1)*24,24,24,x-1,y-2,24,24);return}
+ if(actorAtlasReady&&t>=0&&t<5){const f=Math.floor(visualTime*5+frame)%2;ctx.drawImage(actorAtlas,(f%2)*40,(t+1)*40,40,40,x-4,y-5,32,32);return}
  const bob=Math.sin(visualTime*5+frame*1.7),step=Math.floor(visualTime*9+frame)%2;
  if(t===0){ // plated cave scuttler
   rect(x+3,y+7+bob,18,8,'#a86c45');rect(x+6,y+3+bob,12,7,'#d18b54');rect(x+8,y+4+bob,8,2,'#efb477');
@@ -78,7 +78,7 @@ function drawEnemySprite(x,y,t,frame){
 function drawPlayerSprite(px,py,morph,moving,airborne,run,facing,aim){
  if(actorAtlasReady){
   const frame=morph?6+Math.floor(visualTime*8)%2:airborne?(call('eod_player_vy')<0?4:5):moving?1+(run%3):0;
-  ctx.save();if(facing){ctx.drawImage(actorAtlas,frame*24,0,24,24,px-4,py,24,24)}else{ctx.translate(px+8,0);ctx.scale(-1,1);ctx.drawImage(actorAtlas,frame*24,0,24,24,-12,py,24,24)}ctx.restore();
+  ctx.save();if(facing){ctx.drawImage(actorAtlas,frame*40,0,40,40,px-8,py-6,32,32)}else{ctx.translate(px+8,0);ctx.scale(-1,1);ctx.drawImage(actorAtlas,frame*40,0,40,40,-16,py-6,32,32)}ctx.restore();
   if(!morph){const aimDx=[4,3,0,-3,-4,-3,0,3][aim]||0,aimDy=[0,-3,-4,-3,0,3,4,3][aim]||0,gunX=px+8+aimDx,gunY=py+10+aimDy;rect(gunX-2,gunY-1,5,3,'#b5d4d2');rect(gunX+(aimDx>=0?2:-3),gunY,4,2,'#e8f8f2')}
   return;
  }
@@ -144,9 +144,8 @@ if(call('eod_boss_active')){
   if(attack===3){for(let k=-1;k<=1;k++){rect(x+k*10-3,y-35,6,6,'#e6a66c');rect(x+k*10-1,y-29,2,5,'#f2d18c')}}
   if(attack===4){for(let k=-1;k<=1;k++){let hx=Math.max(2,Math.min(250,tx+k*16));rect(hx-4,29,8,3,'#e6a66c');rect(hx-1,32,2,8,'#f2d18c')}}
  } else if(state===5){rect(0,0,256,2,'#d6aa62')}
- rect(x-22,y-17,44,32,body);rect(x-16,y-25,32,13,'#b57970');
- rect(x-12,y-8,9,5,weak?'#fff0a0':'#ffca7d');rect(x+5,y-8,9,5,weak?'#fff0a0':'#ffca7d');
- rect(x-25,y+11,50,5,'#392d3d');rect(x-20,y+12,40,2,'#c08b65');
+ if(bossAtlasReady){const bf=Math.floor(visualTime*5)%3;ctx.drawImage(bossAtlas,bf*96,0,96,64,x-36,y-30,72,48);if(weak)glow(x,y,30,'rgba(255,210,120,.22)')}
+ else{rect(x-22,y-17,44,32,body);rect(x-16,y-25,32,13,'#b57970');rect(x-12,y-8,9,5,weak?'#fff0a0':'#ffca7d');rect(x+5,y-8,9,5,weak?'#fff0a0':'#ffca7d');rect(x-25,y+11,50,5,'#392d3d');rect(x-20,y+12,40,2,'#c08b65')}
  rect(10,25,236,4,'#233946');rect(10,25,236*call('eod_boss_hp')/Math.max(1,call('eod_boss_max_hp')),4,'#b85b6e');
  ctx.font='7px monospace';ctx.fillStyle='#c6e4e9';ctx.fillText('BURROWER  PHASE '+phase,10,19);
  if(weak){ctx.fillStyle='#f4d58c';ctx.fillText('EXPOSED',190,19)}

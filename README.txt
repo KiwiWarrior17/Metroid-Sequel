@@ -115,3 +115,8 @@ organic veins and drifting spores. These are cosmetic only and do not alter
 gameplay or collision. The atlas is included at assets/actor_atlas.png and is
 precached by service-worker cache v8. Browser checkpoint saves continue to
 use localStorage on this browser/device.
+
+
+MILESTONE 2.2 — REBUILT PIXEL ART
+---------------------------------
+This version replaces the first tiny placeholder atlas with larger authored pixel-art frames. It includes a 40x40-cell player/enemy atlas and a separate three-frame Burrower boss atlas. Both are loaded by the renderer and precached for offline use. The cache is v9. No gameplay rules or save data changed.
