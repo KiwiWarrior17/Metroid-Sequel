@@ -60,7 +60,7 @@ function updateVisualEvents(id,pX,pY){
  visualPrev={room:id,enemyCount:ec,bossHp:bh,energy,projectiles:pc};
 }
 function drawEnemySprite(x,y,t,frame){
- if(actorAtlasReady&&t>=0&&t<5){const f=Math.floor(visualTime*5+frame)%2;ctx.drawImage(actorAtlas,(f%2)*40,(t+1)*40,40,40,x-4,y-5,32,32);return}
+ if(actorAtlasReady&&t>=0&&t<5){const f=Math.floor(visualTime*5+frame)%2;ctx.drawImage(actorAtlas,f*40,(t+1)*40,40,40,x-8,y-8,40,40);return}
  const bob=Math.sin(visualTime*5+frame*1.7),step=Math.floor(visualTime*9+frame)%2;
  if(t===0){ // plated cave scuttler
   rect(x+3,y+7+bob,18,8,'#a86c45');rect(x+6,y+3+bob,12,7,'#d18b54');rect(x+8,y+4+bob,8,2,'#efb477');
@@ -78,8 +78,7 @@ function drawEnemySprite(x,y,t,frame){
 function drawPlayerSprite(px,py,morph,moving,airborne,run,facing,aim){
  if(actorAtlasReady){
   const frame=morph?6+Math.floor(visualTime*8)%2:airborne?(call('eod_player_vy')<0?4:5):moving?1+(run%3):0;
-  ctx.save();if(facing){ctx.drawImage(actorAtlas,frame*40,0,40,40,px-8,py-6,32,32)}else{ctx.translate(px+8,0);ctx.scale(-1,1);ctx.drawImage(actorAtlas,frame*40,0,40,40,-16,py-6,32,32)}ctx.restore();
-  if(!morph){const aimDx=[4,3,0,-3,-4,-3,0,3][aim]||0,aimDy=[0,-3,-4,-3,0,3,4,3][aim]||0,gunX=px+8+aimDx,gunY=py+10+aimDy;rect(gunX-2,gunY-1,5,3,'#b5d4d2');rect(gunX+(aimDx>=0?2:-3),gunY,4,2,'#e8f8f2')}
+  ctx.save();if(facing){ctx.drawImage(actorAtlas,frame*40,0,40,40,px-12,py-10,40,40)}else{ctx.translate(px+8,0);ctx.scale(-1,1);ctx.drawImage(actorAtlas,frame*40,0,40,40,-20,py-10,40,40)}ctx.restore();
   return;
  }
  if(morph){const roll=Math.floor(visualTime*10)%2;glow(px+8,py+9,10,'rgba(90,220,230,.16)');rect(px+1,py+4,15,11,'#c8e0df');rect(px+3,py+2,11,4,'#8fb8be');rect(px+5,py+7,7,5,'#365d6c');rect(px+4,py+13,9,2,'#6f9ca4');rect(px+(facing?13:0),py+8,3,4,'#efb66e');if(roll)rect(px+6,py+3,5,1,'#efffff');return}

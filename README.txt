@@ -120,3 +120,10 @@ use localStorage on this browser/device.
 MILESTONE 2.2 — REBUILT PIXEL ART
 ---------------------------------
 This version replaces the first tiny placeholder atlas with larger authored pixel-art frames. It includes a 40x40-cell player/enemy atlas and a separate three-frame Burrower boss atlas. Both are loaded by the renderer and precached for offline use. The cache is v9. No gameplay rules or save data changed.
+
+MILESTONE 2.2 REFERENCE SPRITE CORRECTION (2026-11-20)
+-----------------------------------------------------
+The shared actor atlas now uses the supplied blue-armored player and five
+provided enemy designs. The two Morph Ball frames are also taken from that
+sheet. The Burrower boss keeps its separate atlas. The service-worker cache
+was advanced to v10 so previously installed mobile builds refresh the art.
