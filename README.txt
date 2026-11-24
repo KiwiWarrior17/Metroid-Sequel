@@ -16,6 +16,7 @@ index.html             Launch page
 manifest.webmanifest   Add-to-Home-Screen metadata
 sw.js                 Offline cache (requires HTTPS or localhost)
 icon.svg               App icon
+audio/eod_audio.js     Original procedural Web Audio engine
 
 HOW TO PUBLISH IT
 -----------------
@@ -54,6 +55,7 @@ MISSILE        Fire missile (once acquired)
 MORPH          Toggle Morph Ball (once acquired)
 BOMB           Drop bomb (once acquired)
 MAP            Open map (once unlocked)
+PHASE          Phase through root barriers (once unlocked)
 PAUSE          Pause/unpause
 
 IMPORTANT
@@ -127,3 +129,87 @@ The shared actor atlas now uses the supplied blue-armored player and five
 provided enemy designs. The two Morph Ball frames are also taken from that
 sheet. The Burrower boss keeps its separate atlas. The service-worker cache
 was advanced to v10 so previously installed mobile builds refresh the art.
+
+MILESTONE 3.2 — PRISM PHASE
+--------------------------
+The Prism Sentinel's Prism Core now unlocks Prism Phase. Press L on desktop or
+PHASE on the mobile touch controls to activate a 90-frame pulse that lets the
+player pass through phase-root barriers. The ability has a 180-frame cooldown.
+Two optional Missile Tanks are hidden behind phase-root barriers in 01-06 and
+02-02. The regional map marks the rooms containing phase seals until Prism
+Phase is acquired. The mobile offline cache is v20.
+
+MILESTONE 3.6 — WORLD INTEGRATION
+--------------------------------
+The Pressure Regulator now opens a bidirectional shortcut between Drowned
+Index (03-03) and Rootbound Grotto (02-03). The shortcut is locked in both
+directions until the Archive Warden is defeated. A Missile Tank is hidden in
+the Drowned Index pressure-block niche and persists after collection. The
+regional map displays the shortcut and pressure-gate marker. Offline cache v24.
+
+
+MILESTONE 3.7 COMBAT GEOMETRY UPDATE
+------------------------------------
+Hostile enemy and boss projectiles now stop at solid room geometry, including
+sealed doors and ability barriers, instead of passing through cover. Clear
+firing lanes still behave normally. The offline cache was advanced to
+v25 so the updated WebAssembly gameplay core is fetched on the next load.
+
+MILESTONE 3.8 ENEMY TERRAIN NAVIGATION
+--------------------------------------
+Ordinary enemies now collide with the authored room geometry while moving.
+Flying enemies turn at solid walls and sealed ability barriers. Burrowling
+rushes stop at walls or unsupported floor lanes and enter retreat. The offline
+cache was advanced to v26 for the updated WebAssembly gameplay core.
+
+MILESTONE 3.9 SPECIES-SPECIFIC SURFACE MOVEMENT
+------------------------------------------------
+Shard Crawlers now detect adjacent solid floors, ceilings, and vertical walls,
+then crawl along the attached surface while retaining their armored ranged
+attack. If no surface is present, they keep their previous stationary turret
+behavior. The offline cache has been advanced to v27 so the updated WebAssembly
+gameplay core is fetched on the next load.
+
+MILESTONE 4.0 — SPECIES-SPECIFIC MOVEMENT
+----------------------------------------
+Shard Crawlers can now turn between connected floor, wall, and ceiling
+surfaces. Cave Scuttlers can hop short gaps when a landing surface is nearby.
+Reservoir Leeches drift and bob in the authored water-linked rooms, then
+retreat after lunging at the player. The water behavior is room-contextual;
+it is not a full liquid simulation. The mobile offline cache is v28.
+
+MILESTONE 4.1 — ENCOUNTER TACTICS
+--------------------------------
+Silt Rays now pause for a 24-frame warning before firing an aimed shot, then
+enter recovery with a firing cooldown. Their shots are absorbed by solid room
+geometry and sealed ability barriers. Cave Mites abort dives when blocked by
+room geometry and enter recovery rather than pushing against walls. The mobile
+offline cache is v29.
+
+MILESTONE 4.2 — ENEMY GROUP REACTIONS
+------------------------------------
+When an ordinary enemy is successfully hit, its nearest eligible nearby ally
+can react using its species behavior. Cave Mites show an 18-frame warning
+before diving, Burrowlings can emerge, and other species use their existing
+alert responses. Only one ally reacts per hit; distant enemies do not join.
+The mobile offline cache is v30.
+
+
+MILESTONE 4.3 — ATTACK-LANE SPACING
+----------------------------------
+Cave Mites, Reservoir Leeches, and Burrowlings now stagger nearby dive, lunge,
+and rush attacks. One nearby attacker may occupy a local lane; another waits
+12 frames before retrying. Distant enemies do not block one another. Existing
+room rosters, damage values, bosses, and save data are unchanged. Offline cache
+v31 fetches the updated WebAssembly core.
+
+
+MILESTONE 4.4 — VERTICAL-LANE ENCOUNTER TACTICS
+------------------------------------------------
+Enemy activation now respects the player's elevation as well as horizontal
+proximity. Burrowlings wait until the player is near their floor lane before
+emerging; Reservoir Leeches only begin a lunge when the player is within their
+vertical engagement band; and Shard Crawlers only telegraph shots when the
+player is within a practical firing elevation. Cave Mites retain their ability
+to dive between nearby elevations, with a bounded vertical acquisition range.
+The mobile offline cache is v32 so the updated gameplay core is fetched.
